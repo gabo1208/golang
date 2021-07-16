@@ -1,11 +1,13 @@
 package chat
 
 import (
+	"bufio"
 	"fmt"
 	"io"
 	"log"
 	"net"
 	"os"
+	"strings"
 )
 
 func Client() {
@@ -23,16 +25,36 @@ func Client() {
 			log.Fatal(err)
 		}
 
-		log.Println("done")
-		done <- struct{}{}
+		exitClient(done)
 	}()
-	mustCopy(conn, os.Stdin)
+	inputProcessing(conn, done)
 	conn.Close()
 	<-done
 }
 
-func mustCopy(dst io.Writer, src io.Reader) {
-	if _, err := io.Copy(dst, src); err != nil {
-		log.Fatal(err)
+func inputProcessing(dst io.Writer, done chan struct{}) {
+	input := bufio.NewReader(os.Stdin)
+Loop:
+	for {
+		text, err := input.ReadString('\n')
+		if err != nil {
+			log.Fatal(text)
+			break
+		}
+
+		switch text {
+		case ":q\n", ":Q\n":
+			go exitClient(done)
+			break Loop
+		default:
+			if _, err := io.Copy(dst, strings.NewReader(text)); err != nil {
+				log.Fatal(err)
+			}
+		}
 	}
+}
+
+func exitClient(done chan struct{}) {
+	log.Println("done")
+	done <- struct{}{}
 }

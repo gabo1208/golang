@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-type client chan string
+type client chan<- string
 type enter struct {
 	client
 	ip string
