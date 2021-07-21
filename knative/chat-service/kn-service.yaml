@@ -1,0 +1,18 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: chat-service
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      # - image: docker.io/gabo1208/chat-service
+        - image: rabbitmq:3-management-alpine
+          ports:
+            - containerPort: 5672
+          env:
+          - name: RABBITMQ_DEFAULT_USER
+            value: guest
+          - name: RABBITMQ_DEFAULT_PASS
+            value: guest

@@ -1,0 +1,234 @@
+apiVersion: v1
+items:
+- apiVersion: networking.internal.knative.dev/v1alpha1
+  kind: Ingress
+  metadata:
+    annotations:
+      networking.internal.knative.dev/rollout: '{"configurations":[{"configurationName":"cloudevents-player","percent":100,"revisions":[{"revisionName":"cloudevents-player-00001","percent":100}],"stepParams":{}}]}'
+      networking.knative.dev/ingress.class: kourier.ingress.networking.knative.dev
+      serving.knative.dev/creator: kubernetes-admin
+      serving.knative.dev/lastModifier: kubernetes-admin
+    creationTimestamp: "2021-06-30T19:08:47Z"
+    finalizers:
+    - ingresses.networking.internal.knative.dev
+    generation: 1
+    labels:
+      serving.knative.dev/route: cloudevents-player
+      serving.knative.dev/routeNamespace: default
+      serving.knative.dev/service: cloudevents-player
+    name: cloudevents-player
+    namespace: default
+    ownerReferences:
+    - apiVersion: serving.knative.dev/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Route
+      name: cloudevents-player
+      uid: 5f10e04f-f857-4c66-8372-421e4cedfbf8
+    resourceVersion: "1423070"
+    uid: 04c8ed74-f3b9-4c0a-b16e-d87a598d4d79
+  spec:
+    httpOption: Enabled
+    rules:
+    - hosts:
+      - cloudevents-player.default
+      - cloudevents-player.default.svc
+      - cloudevents-player.default.svc.cluster.local
+      http:
+        paths:
+        - splits:
+          - appendHeaders:
+              Knative-Serving-Namespace: default
+              Knative-Serving-Revision: cloudevents-player-00001
+            percent: 100
+            serviceName: cloudevents-player-00001
+            serviceNamespace: default
+            servicePort: 80
+      visibility: ClusterLocal
+    - hosts:
+      - cloudevents-player.default.127.0.0.1.nip.io
+      http:
+        paths:
+        - splits:
+          - appendHeaders:
+              Knative-Serving-Namespace: default
+              Knative-Serving-Revision: cloudevents-player-00001
+            percent: 100
+            serviceName: cloudevents-player-00001
+            serviceNamespace: default
+            servicePort: 80
+      visibility: ExternalIP
+  status:
+    conditions:
+    - lastTransitionTime: "2021-06-30T19:08:47Z"
+      status: "True"
+      type: LoadBalancerReady
+    - lastTransitionTime: "2021-06-30T19:08:47Z"
+      status: "True"
+      type: NetworkConfigured
+    - lastTransitionTime: "2021-06-30T19:08:47Z"
+      status: "True"
+      type: Ready
+    observedGeneration: 1
+    privateLoadBalancer:
+      ingress:
+      - domainInternal: kourier-internal.kourier-system.svc.cluster.local
+    publicLoadBalancer:
+      ingress:
+      - domainInternal: kourier.kourier-system.svc.cluster.local
+- apiVersion: networking.internal.knative.dev/v1alpha1
+  kind: Ingress
+  metadata:
+    annotations:
+      networking.internal.knative.dev/rollout: '{"configurations":[{"configurationName":"hello","percent":100,"revisions":[{"revisionName":"hello-world","percent":100}],"stepParams":{}}]}'
+      networking.knative.dev/ingress.class: kourier.ingress.networking.knative.dev
+      serving.knative.dev/creator: kubernetes-admin
+      serving.knative.dev/lastModifier: kubernetes-admin
+    creationTimestamp: "2021-06-30T19:02:00Z"
+    finalizers:
+    - ingresses.networking.internal.knative.dev
+    generation: 1
+    labels:
+      serving.knative.dev/route: hello
+      serving.knative.dev/routeNamespace: default
+      serving.knative.dev/service: hello
+    name: hello
+    namespace: default
+    ownerReferences:
+    - apiVersion: serving.knative.dev/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Route
+      name: hello
+      uid: 452f0672-e91b-4e24-9538-4a8a4bf0b8fe
+    resourceVersion: "1413387"
+    uid: a1a11cb6-cc19-4612-bdb7-1321f9c660aa
+  spec:
+    httpOption: Enabled
+    rules:
+    - hosts:
+      - hello.default
+      - hello.default.svc
+      - hello.default.svc.cluster.local
+      http:
+        paths:
+        - splits:
+          - appendHeaders:
+              Knative-Serving-Namespace: default
+              Knative-Serving-Revision: hello-world
+            percent: 100
+            serviceName: hello-world
+            serviceNamespace: default
+            servicePort: 80
+      visibility: ClusterLocal
+    - hosts:
+      - hello.default.127.0.0.1.nip.io
+      http:
+        paths:
+        - splits:
+          - appendHeaders:
+              Knative-Serving-Namespace: default
+              Knative-Serving-Revision: hello-world
+            percent: 100
+            serviceName: hello-world
+            serviceNamespace: default
+            servicePort: 80
+      visibility: ExternalIP
+  status:
+    conditions:
+    - lastTransitionTime: "2021-06-30T19:02:00Z"
+      status: "True"
+      type: LoadBalancerReady
+    - lastTransitionTime: "2021-06-30T19:02:00Z"
+      status: "True"
+      type: NetworkConfigured
+    - lastTransitionTime: "2021-06-30T19:02:00Z"
+      status: "True"
+      type: Ready
+    observedGeneration: 1
+    privateLoadBalancer:
+      ingress:
+      - domainInternal: kourier-internal.kourier-system.svc.cluster.local
+    publicLoadBalancer:
+      ingress:
+      - domainInternal: kourier.kourier-system.svc.cluster.local
+- apiVersion: networking.internal.knative.dev/v1alpha1
+  kind: Ingress
+  metadata:
+    annotations:
+      networking.internal.knative.dev/rollout: '{"configurations":[{"configurationName":"helloworld-go","percent":100,"revisions":[{"revisionName":"helloworld-go-00001","percent":100}],"stepParams":{}}]}'
+      networking.knative.dev/ingress.class: kourier.ingress.networking.knative.dev
+      serving.knative.dev/creator: kubernetes-admin
+      serving.knative.dev/lastModifier: kubernetes-admin
+    creationTimestamp: "2021-07-15T22:01:29Z"
+    finalizers:
+    - ingresses.networking.internal.knative.dev
+    generation: 1
+    labels:
+      serving.knative.dev/route: helloworld-go
+      serving.knative.dev/routeNamespace: default
+      serving.knative.dev/service: helloworld-go
+    name: helloworld-go
+    namespace: default
+    ownerReferences:
+    - apiVersion: serving.knative.dev/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Route
+      name: helloworld-go
+      uid: f883b2fa-1105-40df-bda0-48a298e6b771
+    resourceVersion: "4496447"
+    uid: 435384f1-4ff6-4924-98b1-f37d84a5fabf
+  spec:
+    httpOption: Enabled
+    rules:
+    - hosts:
+      - helloworld-go.default
+      - helloworld-go.default.svc
+      - helloworld-go.default.svc.cluster.local
+      http:
+        paths:
+        - splits:
+          - appendHeaders:
+              Knative-Serving-Namespace: default
+              Knative-Serving-Revision: helloworld-go-00001
+            percent: 100
+            serviceName: helloworld-go-00001
+            serviceNamespace: default
+            servicePort: 80
+      visibility: ClusterLocal
+    - hosts:
+      - helloworld-go.default.127.0.0.1.nip.io
+      http:
+        paths:
+        - splits:
+          - appendHeaders:
+              Knative-Serving-Namespace: default
+              Knative-Serving-Revision: helloworld-go-00001
+            percent: 100
+            serviceName: helloworld-go-00001
+            serviceNamespace: default
+            servicePort: 80
+      visibility: ExternalIP
+  status:
+    conditions:
+    - lastTransitionTime: "2021-07-15T22:01:30Z"
+      status: "True"
+      type: LoadBalancerReady
+    - lastTransitionTime: "2021-07-15T22:01:29Z"
+      status: "True"
+      type: NetworkConfigured
+    - lastTransitionTime: "2021-07-15T22:01:30Z"
+      status: "True"
+      type: Ready
+    observedGeneration: 1
+    privateLoadBalancer:
+      ingress:
+      - domainInternal: kourier-internal.kourier-system.svc.cluster.local
+    publicLoadBalancer:
+      ingress:
+      - domainInternal: kourier.kourier-system.svc.cluster.local
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

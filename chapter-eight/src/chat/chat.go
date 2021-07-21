@@ -6,7 +6,7 @@ import (
 )
 
 func Chat() {
-	listener, err := net.Listen("tcp", "localhost:8000")
+	listener, err := net.Listen("tcp", "localhost:8080")
 	if err != nil {
 		log.Fatal(err)
 	}
