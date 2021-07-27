@@ -32,3 +32,5 @@ spec:
             value: "10.96.11.252"
           - name: RABBITMQ_PORT
             value: "5672"
+          - name: CHAT_TCP_PORT
+            value: "32080"

@@ -115,6 +115,27 @@ func handleConn(conn net.Conn, rabbitConn *amqp.Connection) {
 	conn.Close()
 }
 
+func chatListen(rabbitConn *amqp.Connection) {
+	port := os.Getenv("CHAT_TCP_PORT")
+	if port == "" {
+		port = "32080"
+	}
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			log.Print(err)
+			continue
+		}
+
+		go handleConn(conn, rabbitConn)
+	}
+}
+
 func ChatService(port string) {
 	listener, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
 	if err != nil {
@@ -127,6 +148,8 @@ func ChatService(port string) {
 		log.Fatal(err)
 	}
 	defer rabbitConn.Close()
+
+	go chatListen(rabbitConn)
 
 	log.Print("ChatService: listening for incoming connections...")
 	for {
@@ -150,7 +173,7 @@ func ChatService(port string) {
 			continue
 		}
 
-		go handleConn(conn, rabbitConn)
+		//go handleConn(conn, rabbitConn)
 	}
 }
 
