@@ -3,9 +3,11 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"log"
 	"net"
 	"os"
+	"strings"
 
 	"github.com/streadway/amqp"
 )
@@ -19,7 +21,17 @@ func failOnError(err error, msg string) {
 }
 
 func createRabbitMQConn() (*amqp.Connection, error) {
-	conn, err := amqp.Dial("amqp://guest:guest@127.0.0.1:5672")
+	url := os.Getenv("RABBITMQ_URL")
+	if url == "" {
+		url = "localhost"
+	}
+
+	port := os.Getenv("RABBITMQ_PORT")
+	if port == "" {
+		port = "5672"
+	}
+
+	conn, err := amqp.Dial(fmt.Sprintf("amqp://guest:guest@%s:%s", url, port))
 	failOnError(err, "Failed to connect to RabbitMQ")
 	return conn, err
 }
@@ -103,19 +115,16 @@ func handleConn(conn net.Conn, rabbitConn *amqp.Connection) {
 	conn.Close()
 }
 
-func ChatService(url, port string) {
-	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%s", url, port))
+func chatListen(rabbitConn *amqp.Connection) {
+	port := os.Getenv("CHAT_TCP_PORT")
+	if port == "" {
+		port = "32080"
+	}
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Print("ChatService: starting rabbitMQ connection...")
-	rabbitConn, err := createRabbitMQConn()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rabbitConn.Close()
-	log.Print("ChatService: listening for incoming connections...")
 	for {
 		conn, err := listener.Accept()
 		if err != nil {
@@ -127,19 +136,75 @@ func ChatService(url, port string) {
 	}
 }
 
-func main() {
-	log.Print("ChatService: starting server...")
-
-	url := os.Getenv("URL")
-	if url == "" {
-		url = "localhost"
+func ChatService(port string) {
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	port := os.Getenv("PORT")
+	log.Print("ChatService: starting rabbitMQ connection...")
+	rabbitConn, err := createRabbitMQConn()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rabbitConn.Close()
+
+	go chatListen(rabbitConn)
+
+	log.Print("ChatService: listening for incoming connections...")
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			log.Print(err)
+			continue
+		}
+		var bArr []byte
+		_, err = conn.Read(bArr)
+		if err != nil {
+			log.Print(err)
+			continue
+		}
+
+		probe, err := isProbe(conn)
+		if probe {
+			if err != nil {
+				log.Print(err)
+			}
+			continue
+		}
+
+		//go handleConn(conn, rabbitConn)
+	}
+}
+
+func isProbe(conn net.Conn) (bool, error) {
+	tmp := make([]byte, 256)
+	for {
+		n, err := conn.Read(tmp)
+		if err != nil {
+			if err != io.EOF {
+				fmt.Println("read error:", err)
+			}
+			return true, err
+		}
+
+		if strings.Contains(string(tmp[:n]), "R-Type: Probe") {
+			conn.Write([]byte("HTTP/1.1 200 OK\r\nContent-Length: 3\r\n\r\nfoo"))
+			conn.Close()
+			return true, nil
+		}
+
+		return false, nil
+	}
+}
+
+func main() {
+	log.Print("ChatService: starting server...")
+	port := os.Getenv("CHAT_PORT")
 	if port == "" {
 		port = "8080"
 	}
 
 	log.Printf("ChatService: listening on port %s", port)
-	ChatService(url, port)
+	ChatService(port)
 }
