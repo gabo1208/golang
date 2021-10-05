@@ -1,0 +1,8 @@
+apiVersion: eventing.knative.dev/v1
+kind: broker
+metadata:
+ name: conformance-broker
+spec:
+  delivery:
+    deadLetterSink:
+      uri: http://conformance-deadletter.default.127.0.0.1.nip.io

@@ -1,0 +1,17 @@
+apiVersion: sources.knative.dev/v1
+kind: PingSource
+metadata:
+  name: test-ping-source
+  schedule: "*/1 * * * *"
+  contentType: "application/json; charset=utf-8"
+  data: '{"message": "Hello world!"}'
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: conformance-events
+spec:
+  ceOverrides:
+    extensions:
+      extra: this is an extra attribute
+      additional: 42
