@@ -5,6 +5,15 @@ import (
 	"fmt"
 
 	cloudevents "github.com/cloudevents/sdk-go/v2"
+	"github.com/cloudevents/sdk-go/v2/binding/spec"
+)
+
+const (
+	prefix = "ce-"
+)
+
+var (
+	specs = spec.WithPrefix(prefix)
 )
 
 func main() {
@@ -12,17 +21,37 @@ func main() {
 	event.SetID("example-uuid-32943bac6fea")
 	event.SetSource("example/uri")
 	event.SetType("example.type")
-	event.SetData(cloudevents.ApplicationJSON, map[string]string{"hello": "world"})
+	event.SetData(cloudevents.ApplicationJSON, map[string]string{"specversion": "0.3"})
 	event.SetExtension("test", "testing")
-	fmt.Println(event.Extensions())
+	event.SetSubject("testsub")
+	event.SetDataContentType("testdatacontt")
+	event.SetDataSchema("testdatasch")
+	//fmt.Println(event)
+	//fmt.Println("---------------------------------")
+	//fmt.Println()*/
 
-	bytes, err := json.Marshal(event)
-	fmt.Println(err)
+	data := `{
+		"specversion": "1.0",
+		"type": "example.type",
+		"source": "example/uri",
+		"id": 1234,
+		"extra": "hey im extra"
+	}`
+	err := json.Unmarshal([]byte(data), &event)
+	if err != nil {
+		fmt.Println(err, data)
+	}
 	fmt.Println(event)
+	fmt.Println("---------------------------------")
+	fmt.Println()
 
-	event = cloudevents.NewEvent()
-	err = json.Unmarshal(bytes, &event)
-	fmt.Println(err)
+	err = specs.Version(event.SpecVersion()).SetAttribute(event.Context, "ce-time", "2021-10-27T19:55:17.3224399Z")
+	if err != nil {
+		fmt.Println(err, data)
+	}
+
 	fmt.Println(event)
-	fmt.Println(event.Extensions())
+	fmt.Println("---------------------------------")
+	fmt.Println()
+	fmt.Println(specs.Version(event.SpecVersion()).Attribute("ce-time"))
 }
