@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -19,8 +18,8 @@ var (
 )
 
 func main() {
-	event := cloudevents.NewEvent()
-	event2 := cloudevents.NewEvent()
+	/*event := cloudevents.NewEvent()
+	//event2 := cloudevents.NewEvent()
 	event.SetID("example-uuid-32943bac6fea")
 	event.SetSource("example/uri")
 	event.SetType("example.type")
@@ -56,9 +55,10 @@ func main() {
 		"extra2": "hey im extra",
 		"extra": "hey im extra"
 	}`
-	err = json.Unmarshal([]byte(data2), &event2)
+	err := event.UnmarshalJSON([]byte(data2))
+	event.SetTime(time.Now())
 	if err != nil {
-		fmt.Println(err, data)
+		fmt.Println(err, data2)
 	}
 	fmt.Println(event)
 	fmt.Println("---------------------------------")
@@ -82,14 +82,12 @@ func main() {
 		fmt.Println(err)
 	}
 
-	for key, val := range specs.Version(event.SpecVersion()).Attributes() {
-		fmt.Printf("%d:: %s\n", key, val)
-	}
-
 	fmt.Println(event)
 	fmt.Println("---------------------------------")
 	fmt.Println()
-	fmt.Println(specs.Version(event.SpecVersion()).Attributes()[0])
+	fmt.Println(specs.Version(event.SpecVersion()).Attributes()[0])*/
+	a := spec.Kind(0)
+	fmt.Println(a)
 }
 
 func isBinary(headers map[string]interface{}) bool {
