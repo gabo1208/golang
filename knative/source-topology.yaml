@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: rabbitbroker
+  name: rabbitsource
 ---
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
   name: cluster
-  namespace: rabbitbroker
+  namespace: rabbitsource
 spec:
   replicas: 1
 ---
@@ -15,7 +15,7 @@ apiVersion: eventing.knative.dev/v1
 kind: Broker
 metadata:
   name: default
-  namespace: rabbitbroker
+  namespace: rabbitsource
   annotations:
     eventing.knative.dev/broker.class: RabbitMQBroker
 spec:
@@ -23,38 +23,61 @@ spec:
     apiVersion: rabbitmq.com/v1beta1
     kind: RabbitmqCluster
     name: cluster
-    namespace: rabbitbroker
+    namespace: rabbitsource
 ---
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: subscriber
-  namespace: rabbitbroker
+  namespace: rabbitsource
 spec:
   template:
     spec:
       containers:
       - image: gcr.io/knative-releases/knative.dev/eventing/cmd/event_display
 ---
-apiVersion: eventing.knative.dev/v1
-kind: Trigger
+apiVersion: sources.eventing.knative.dev/v1alpha1
+kind: RabbitmqSource
 metadata:
-  name: default
-  namespace: rabbitbroker
+  name: rabbitmq-source
+  namespace: rabbitsource
 spec:
-  broker: default
-  subscriber:
-    ref:
-      apiVersion: serving.knative.dev/v1
-      kind: Service
-      name: subscriber
-      namespace: rabbitbroker
+  brokers: RABBITMQ_BROKERS
+  topic: RABBITMQ_TOPIC
+  user:
+    secretKeyRef:
+      name: RABBITMQ_USER
+      key: RABBITMQ_USER
+  password:
+    secretKeyRef:
+      name: RABBITMQ_PASSWORD
+      key: RABBITMQ_PASSWORD
+  exchange_config:
+    name: RABBITMQ_EXCHANGE_CONFIG_NAME
+    type: RABBITMQ_EXCHANGE_CONFIG_TYPE
+    durable: RABBITMQ_EXCHANGE_CONFIG_DURABLE
+    auto_deleted: RABBITMQ_EXCHANGE_CONFIG_AUTO_DELETED
+    internal: RABBITMQ_EXCHANGE_CONFIG_INTERNAL
+    nowait: RABBITMQ_EXCHANGE_CONFIG_NOWAIT
+  queue_config:
+    name: RABBITMQ_QUEUE_CONFIG_NAME
+    routing_key: RABBITMQ_ROUTING_KEY
+    durable: RABBITMQ_QUEUE_CONFIG_DURABLE
+    delete_when_unused: RABBITMQ_QUEUE_CONFIG_AUTO_DELETED
+    exclusive: RABBITMQ_QUEUE_CONFIG_EXCLUSIVE
+    nowait: RABBITMQ_QUEUE_CONFIG_NOWAIT
+
+  sink:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: event-display
+    namespace: rabbitsource
 ---
 apiVersion: sources.knative.dev/v1
 kind: ContainerSource
 metadata:
   name: heartbeats
-  namespace: rabbitbroker
+  namespace: rabbitsource
 spec:
   template:
     spec:
@@ -73,4 +96,4 @@ spec:
       apiVersion: eventing.knative.dev/v1
       kind: Broker
       name: default
-      namespace: rabbitbroker
+      namespace: rabbitsource
