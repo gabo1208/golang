@@ -1,0 +1,35 @@
+.contacts-column {
+  width: 100%;
+  background-color: #afa5a5cf;
+}
+
+.contact-card, .contact-img, .contact-name, .contact-last-msg {
+  display: flex;
+}
+
+.contact-img, .contact-info {
+  flex: 1;
+  padding: 20px;
+}
+
+.contact-card {
+  background-color: white;
+  opacity: 0.85;
+  border-radius: 25px;
+  padding: 10px;
+  border-radius: 0px 0px 24px 0px;
+  cursor: pointer;
+}
+
+.contact-info {
+  flex-direction: column;
+  flex: 3;
+}
+
+.user-name {
+  margin-bottom: 4px;
+}
+
+.usr-pic {
+  width: 90px;
+}

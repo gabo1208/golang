@@ -1,0 +1,31 @@
+.chat-column {
+  width: 100%;
+}
+
+.messages, .chat-section, .messages-bubble, .chat-bubble, .bubbles-bg {
+  display: flex;
+  flex: 1;
+}
+
+.messages {
+  height: 75%;
+}
+
+.chat-section {
+  height: 25%;
+}
+
+.messages-bubble {
+  padding: 20px 40px 10px;
+}
+
+.chat-bubble {
+  padding: 10px 40px 20px;
+}
+
+.bubbles-bg {
+  background-color: white;
+  opacity: 0.9;
+  padding: 30px;
+  border-radius: 25px;
+}
