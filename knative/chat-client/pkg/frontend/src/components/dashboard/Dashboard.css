@@ -1,16 +1,20 @@
-.dashboard, .contacts, .chat {
+.dashboard, .side-bar, .chat, .app-container {
   display: flex;
 }
 
 .dashboard {
-  height: calc(100% - 96px);
-  background-image: url(./whatsup-bg.jpg);
+  height: calc(100% - 90px);
+  background-image: url(../../static/img/whatsup-bg.jpg);
   background-size: contain;
   background-position-y: -1px;
 }
 
-.contacts {
+.side-bar {
   flex: 1;
+}
+
+.app-container.bg {
+  background-color: #ffffff1c;
 }
 
 .chat {

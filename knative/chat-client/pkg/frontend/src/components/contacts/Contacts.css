@@ -3,7 +3,7 @@
   background-color: #afa5a5cf;
 }
 
-.contact-card, .contact-img, .contact-name, .contact-last-msg {
+.contact-card, .contact-img, .contact-name, .contact-last-seen, .contact-last-msg {
   display: flex;
 }
 
@@ -14,11 +14,15 @@
 
 .contact-card {
   background-color: white;
-  opacity: 0.85;
+  opacity: 0.75;
   border-radius: 25px;
   padding: 10px;
   border-radius: 0px 0px 24px 0px;
   cursor: pointer;
+}
+
+.contact-card.selected {
+  opacity: 0.85;
 }
 
 .contact-info {
@@ -30,6 +34,12 @@
   margin-bottom: 4px;
 }
 
-.usr-pic {
+.user-img {
   width: 90px;
+}
+
+.contact-last-seen {
+  margin-top: -10px;
+  font-size: 11px;
+  color: gray;
 }

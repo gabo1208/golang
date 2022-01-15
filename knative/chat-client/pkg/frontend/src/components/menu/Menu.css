@@ -1,0 +1,41 @@
+.menu-column {
+  display: flex;
+  width: 100%;
+  background-color: #afa5a5cf;
+  flex-direction: column;
+}
+
+.option-card, .option-img, .option-name {
+  display: flex;
+}
+
+.option-info {
+  flex: 1;
+  padding: 20px;
+}
+
+.option-card {
+  background-color: white;
+  opacity: 0.75;
+  border-radius: 25px;
+  border-radius: 0px 0px 24px 0px;
+  cursor: pointer;
+}
+
+.option-card.selected {
+  opacity: 0.85;
+}
+
+.option-info {
+  flex-direction: column;
+  flex: 3;
+}
+
+.option-name {
+  margin-bottom: 4px;
+}
+
+.option-img {
+  width: 34px;
+  padding: 8px 20px;
+}
