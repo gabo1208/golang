@@ -5,7 +5,7 @@
   flex-direction: column;
 }
 
-.option-card, .option-img, .option-name {
+.option-card, .option-img-wrapper, .option-name {
   display: flex;
 }
 
@@ -16,14 +16,9 @@
 
 .option-card {
   background-color: white;
-  opacity: 0.75;
+  opacity: 0.85;
   border-radius: 25px;
   border-radius: 0px 0px 24px 0px;
-  cursor: pointer;
-}
-
-.option-card.selected {
-  opacity: 0.85;
 }
 
 .option-info {
@@ -37,5 +32,10 @@
 
 .option-img {
   width: 34px;
-  padding: 8px 20px;
+  padding: 35px 24px;
+}
+
+.chat-input.menu {
+  width: auto;
+  padding: 24px 24px 22px 0;
 }

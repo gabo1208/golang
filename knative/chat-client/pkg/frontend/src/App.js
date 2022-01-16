@@ -1,28 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import './App.css';
 import { Dashboard } from './components/dashboard/Dashboard'
 import userImg from './static/img/user.png'
 
 function App() {
-  const [userContent, setuserContent] = useState({
-    menuBarClass: '',
-    userName: 'test'
+  const [chatState, setChatState] = useState({
+    menubarClass: "change",
+    username: "",
+    selectedChat: { messages: [] },
+    connectedUsers: []
   })
 
-  const handleMenuClick = (e) => {
+  const usernameCallback = useCallback(username => {
+    if (username !== "") {
+      setChatState({ ...chatState, username: username })
+    }
+  }, [setChatState, chatState])
+
+
+  const handleMenuClick = () => {
+    setChatState({ ...chatState, menuBarClass: getNextChatClass() })
+  }
+
+  const getNextChatClass = () => {
     var menuClass = ""
-    if (userContent.menuBarClass === "") {
+    if (chatState.menuBarClass === "" || !chatState.username) {
       menuClass = "change"
     }
 
-    setuserContent({ menuBarClass: menuClass })
+    return menuClass
   }
 
   return (
     <div className="App">
       <header>
-        <div className={`app-container ${userContent.menuBarClass}`} onClick={handleMenuClick}>
-          <div className="container">
+        <div className={`app-container ${chatState.menuBarClass}`} onClick={handleMenuClick}>
+          <div className="container cursor-pointer">
             <div className="bar1"></div>
             <div className="bar2"></div>
             <div className="bar3"></div>
@@ -31,7 +44,11 @@ function App() {
           <div className="app-title">What'sUp</div>
         </div>
       </header>
-      <Dashboard menuBarStatus={userContent.menuBarClass !== ""} />
+      <Dashboard
+        menuBarStatus={chatState.menuBarClass !== ""}
+        chatState={chatState}
+        usernameCallback={usernameCallback}
+      />
     </div>
   );
 }

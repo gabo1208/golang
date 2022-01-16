@@ -30,7 +30,6 @@ header {
 
 .container {
   display: inline-block;
-  cursor: pointer;
 }
 
 .bar1, .bar2, .bar3 {
@@ -60,4 +59,12 @@ header {
 .change .bar3 {
   -webkit-transform: rotate(45deg) translate(-5px, -6px);
   transform: rotate(45deg) translate(-5px, -6px);
+}
+
+.blocked {
+  cursor: not-allowed;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

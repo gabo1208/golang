@@ -1,11 +1,11 @@
 import React from 'react';
 import './Contacts.css'
-import userImg from '../../static/img/user.png'
+import userImg from '../../../static/img/user.png'
 
 export function Contacts() {
   return (
     <div className="contacts-column">
-      <div className="contact-card selected">
+      <div className="contact-card selected cursor-pointer">
         <div className="contact-img">
           <img className="user-img" src={userImg} alt="user-img.png" />
         </div>
@@ -21,7 +21,7 @@ export function Contacts() {
           </div>
         </div>
       </div>
-      <div className="contact-card">
+      <div className="contact-card cursor-pointer">
         <div className="contact-img">
           <img className="user-img" src={userImg} alt="user-img.png" />
         </div>
