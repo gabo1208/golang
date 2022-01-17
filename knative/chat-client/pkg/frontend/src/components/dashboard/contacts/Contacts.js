@@ -37,7 +37,7 @@ export function Contacts(props) {
           </div>
         )
       })
-      : <div className="no-contacts-msg">Connected People: 0</div>
+      : <div className="no-contacts-msg">Connected Users: 0</div>
   }
 
   return (

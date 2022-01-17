@@ -18,6 +18,11 @@ Check on [React's README.md](./pkg/frontend/README.md) for more detailed info
 Build the frontend:
 ```shell
 cd pkg/frontend
+npm run build4ko
+```
+or
+```shell
+cd pkg/frontend
 npm run build
 cp -r build/* ../../cmd/go-chat-client/kodata/www/
 cd ../..
