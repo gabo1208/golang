@@ -41,7 +41,7 @@ header {
 }
 
 .app-title, .container {
-  margin-top: 9px;
+  margin-top: 10px;
 }
 
 /* Rotate first bar */
@@ -67,4 +67,41 @@ header {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+/* Scrollbar css */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+.side-bar-header {
+  flex: 1;
+}
+
+.chat-header {
+  flex: 3.5;
+}
+
+.change, .header-container {
+  display: flex;
+}
+
+.header-container {
+  max-width: 1890px;
+  margin: auto;
 }

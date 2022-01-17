@@ -26,7 +26,7 @@ export function Menu(props) {
           <div className="option">
             {props.username
               ? <h3 className="option-name">
-                <b>{props.username}</b>
+                <b>Hey {props.username}</b>
               </h3>
               : <input
                 type="text"
@@ -43,7 +43,7 @@ export function Menu(props) {
       </div>
       <div className="option-card cursor-pointer">
         <div className="option-img-wrapper">
-          <img src={logoutIcon} className="option-img" alt="option-img.png" />
+          <img src={logoutIcon} className="option-img logout" alt="option-img.png" />
         </div>
         <div className="option-info">
           <div className="option">

@@ -14,7 +14,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build4ko": "react-scripts build && cp -R ./build/* ../../cmd/go-chat-client/kodata/www"
   },
   "eslintConfig": {
     "extends": [

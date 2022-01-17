@@ -3,13 +3,10 @@ import sendBtn from '../../../static/img/send-btn.png'
 import './Chat.css'
 
 export function Chat(props) {
-  const [chatContent, setInputMessage] = useState({
-    messageInput: '',
-    messages: props.selectedChat?.messages || []
-  })
+  const [messageInput, setMessageInput] = useState('')
 
   const chatInputHandler = (e) => {
-    setInputMessage({ messageInput: e.target.value })
+    setMessageInput(e.target.value)
   }
 
   const handleChatInputKeyDown = (e) => {
@@ -19,23 +16,31 @@ export function Chat(props) {
   }
 
   const sendButton = () => {
-    if (chatContent.messageInput !== '') {
-      alert(chatContent.messageInput)
-      setInputMessage({ messageInput: '' })
+    if (messageInput !== '') {
+      props.updateChatMessagesCallback(messageInput)
+      setMessageInput('')
     }
   }
 
   const chatDefaultMsg = () => {
-    return props.username ? "Start chatting with !"
-      : "Please choose an username to start chatting!"
+    if (!props.username) {
+      return "Please choose an username to start chatting!"
+    }
+
+    if (!props.connectedUsersNumber) {
+      return "Wait for someone to come online and start chatting :)!"
+    }
+
+    return props.selectedChat ? `Start chatting with ${props.selectedChat?.chatUsername}!`
+      : "Click on one of your contacts and start chatting!"
   }
 
   const renderMessages = (messagesList) => {
-    return messagesList.map(message => {
-      return <div className={(message.mine ? "user" : "contact") + "-message"}>
+    return messagesList.map((message, i) => (
+      <div key={i} className={(message.mine ? "user" : "contact") + "-message"}>
         {message.content}
       </div>
-    })
+    ))
   }
 
   return (
@@ -43,10 +48,10 @@ export function Chat(props) {
       <div className="messages">
         <div className="messages-bubble">
           <div className="bubbles-bg">
-            {chatContent.messages?.length
-              ? renderMessages(chatContent.messages)
+            {props.selectedChat?.messages.length
+              ? renderMessages(props.selectedChat?.messages)
               : <div className="empty-chat">
-                <h3>{chatDefaultMsg()}</h3>
+                <h3 className="chat-default-msg">{chatDefaultMsg()}</h3>
               </div>}
           </div>
         </div>
@@ -56,7 +61,7 @@ export function Chat(props) {
           <div className="bubbles-bg">
             <img
               src={sendBtn}
-              className="send-btn"
+              className="send-btn cursor-pointer"
               alt="send-btn.png"
               onClick={sendButton}
             />
@@ -65,7 +70,7 @@ export function Chat(props) {
               name="message"
               className="chat-input"
               placeholder="Type a message"
-              value={chatContent.messageInput}
+              value={messageInput}
               onChange={chatInputHandler}
               onKeyDown={handleChatInputKeyDown}
             />

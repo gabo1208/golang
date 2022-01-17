@@ -4,27 +4,25 @@ import { Dashboard } from './components/dashboard/Dashboard'
 import userImg from './static/img/user.png'
 
 function App() {
-  const [chatState, setChatState] = useState({
-    menubarClass: "change",
-    username: "",
-    selectedChat: { messages: [] },
-    connectedUsers: []
+  const [appState, setAppState] = useState({
+    menuBarClass: "change",
+    username: ""
   })
 
   const usernameCallback = useCallback(username => {
     if (username !== "") {
-      setChatState({ ...chatState, username: username })
+      setAppState({ menuBarClass: '', username })
     }
-  }, [setChatState, chatState])
+  }, [setAppState])
 
 
   const handleMenuClick = () => {
-    setChatState({ ...chatState, menuBarClass: getNextChatClass() })
+    setAppState({ ...appState, menuBarClass: getNextChatClass() })
   }
 
   const getNextChatClass = () => {
-    var menuClass = ""
-    if (chatState.menuBarClass === "" || !chatState.username) {
+    let menuClass = ""
+    if (appState.menuBarClass === "" || !appState.username) {
       menuClass = "change"
     }
 
@@ -34,19 +32,28 @@ function App() {
   return (
     <div className="App">
       <header>
-        <div className={`app-container ${chatState.menuBarClass}`} onClick={handleMenuClick}>
-          <div className="container cursor-pointer">
-            <div className="bar1"></div>
-            <div className="bar2"></div>
-            <div className="bar3"></div>
+        <div className="header-container">
+          <div className="side-bar-header">
+            <div
+              className={`app-container ${appState.menuBarClass}`}
+              onClick={handleMenuClick}
+            >
+
+              <div className="container cursor-pointer">
+                <div className="bar1"></div>
+                <div className="bar2"></div>
+                <div className="bar3"></div>
+              </div>
+              <img className="header-img" alt="user-img.png" src={userImg} />
+              <div className="app-title">What'sUp</div>
+            </div>
           </div>
-          <img className="header-img" alt="user-img.png" src={userImg} />
-          <div className="app-title">What'sUp</div>
+          <div className="chat-header"></div>
         </div>
       </header>
       <Dashboard
-        menuBarStatus={chatState.menuBarClass !== ""}
-        chatState={chatState}
+        menuBarStatus={appState.menuBarClass !== ""}
+        username={appState.username}
         usernameCallback={usernameCallback}
       />
     </div>

@@ -28,6 +28,7 @@
   padding: 30px;
   border-radius: 25px;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .contact-message, .user-message {
@@ -58,4 +59,19 @@
 .send-btn {
   margin: auto 20px auto 0;
   width: 54px;
+  opacity: 0.7;
+}
+
+.chat-default-msg {
+  font-weight: 500;
+}
+
+.no-contacts-msg {
+  font-weight: 600;
+}
+
+.filter, .no-contacts-msg {
+  display: flex;
+  margin: 10px;
+  padding: 20px 24px;
 }

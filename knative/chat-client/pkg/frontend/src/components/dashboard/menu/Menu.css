@@ -3,15 +3,11 @@
   width: 100%;
   background-color: #afa5a5cf;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .option-card, .option-img-wrapper, .option-name {
   display: flex;
-}
-
-.option-info {
-  flex: 1;
-  padding: 20px;
 }
 
 .option-card {
@@ -24,6 +20,7 @@
 .option-info {
   flex-direction: column;
   flex: 3;
+  padding: 20px;
 }
 
 .option-name {
@@ -38,4 +35,8 @@
 .chat-input.menu {
   width: auto;
   padding: 24px 24px 22px 0;
+}
+
+.option-img.logout {
+  opacity: 0.7;
 }
