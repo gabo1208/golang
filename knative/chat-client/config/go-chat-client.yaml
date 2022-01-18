@@ -1,7 +1,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: sockeye
+  name: go-chat-client
 spec:
   template:
     metadata:
@@ -9,4 +9,4 @@ spec:
         autoscaling.knative.dev/maxScale: "1"
     spec:
       containers:
-        - image: ko://github.com/gabo1208/golang/knative/chat-client/cmd/chat-client
+        - image: ko://github.com/gabo1208/golang/knative/chat-client/cmd/go-chat-client

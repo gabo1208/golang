@@ -33,6 +33,7 @@ func main() {
 
 	t, err := cloudevents.NewHTTP(
 		cloudevents.WithPath("/ce"), // hack hack
+		cloudevents.WithPort(env.Port),
 	)
 	if err != nil {
 		log.Fatalf("failed to create cloudevents transport, %s", err.Error())
@@ -45,6 +46,7 @@ func main() {
 		}
 		c.RootHandler(w, r)
 	})
+
 	t.Handler = c.Mux()
 
 	ce, err := cloudevents.NewClient(t, cloudevents.WithUUIDs(), cloudevents.WithTimeNow())
@@ -52,7 +54,7 @@ func main() {
 		log.Fatalf("failed to create cloudevents client, %s", err.Error())
 	}
 
-	log.Printf("Server starting on port 8080\n")
+	log.Printf("Server starting on port %d\n", env.Port)
 	if err := ce.StartReceiver(context.Background(), c.CeHandler); err != nil {
 		log.Fatalf("failed to start cloudevent receiver, %s", err.Error())
 	}
