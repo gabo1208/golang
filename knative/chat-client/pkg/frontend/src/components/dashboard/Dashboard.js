@@ -8,7 +8,8 @@ export function Dashboard(props) {
   const [chatState, setChatState] = useState({
     selectedChatIndex: 0,
     connectedUsers: []
-    // {username: string, messages: {content: string, mine: bool}}
+    // This while I implement typescript
+    // userModel: {username: string, messages: {content: string, mine: bool}}
   })
 
   const updateChatMessagesCallback = useCallback(message => {

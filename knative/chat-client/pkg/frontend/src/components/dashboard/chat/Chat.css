@@ -66,12 +66,13 @@
   font-weight: 500;
 }
 
-.no-contacts-msg {
-  font-weight: 600;
-}
-
 .filter, .no-contacts-msg {
   display: flex;
   margin: 10px;
   padding: 20px 24px;
+}
+
+.no-contacts-msg {
+  font-weight: 600;
+  padding-top: 10px;
 }

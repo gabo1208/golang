@@ -39,7 +39,7 @@ function App() {
               onClick={handleMenuClick}
             >
 
-              <div className="container cursor-pointer">
+              <div className={`container ${appState.username ? "cursor-pointer" : "blocked"}`}>
                 <div className="bar1"></div>
                 <div className="bar2"></div>
                 <div className="bar3"></div>
@@ -50,13 +50,13 @@ function App() {
           </div>
           <div className="chat-header"></div>
         </div>
-      </header>
+      </header >
       <Dashboard
         menuBarStatus={appState.menuBarClass !== ""}
         username={appState.username}
         usernameCallback={usernameCallback}
       />
-    </div>
+    </div >
   );
 }
 

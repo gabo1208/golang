@@ -61,12 +61,12 @@ header {
   transform: rotate(45deg) translate(-5px, -6px);
 }
 
-.blocked {
-  cursor: not-allowed;
-}
-
 .cursor-pointer {
   cursor: pointer;
+}
+
+.blocked {
+  cursor: not-allowed;
 }
 
 /* Scrollbar css */

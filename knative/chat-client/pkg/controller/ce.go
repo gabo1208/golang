@@ -19,6 +19,4 @@ func (c *Controller) CeHandler(event cloudevents.Event) {
 	}
 
 	manager.broadcast <- string(b)
-
-	return
 }

@@ -31,7 +31,10 @@ export function Chat(props) {
       return "Wait for someone to come online and start chatting :)!"
     }
 
-    return props.selectedChat ? `Start chatting with ${props.selectedChat?.chatUsername}!`
+    let userChatMsg = props.selectedChat?.chatUsername === props.username
+      ? "Here is a space where you can talk to yourself and 'no one' is going to jugde you!"
+      : `Start chatting with ${props.selectedChat?.chatUsername}!`
+    return props.selectedChat ? userChatMsg
       : "Click on one of your contacts and start chatting!"
   }
 
@@ -56,12 +59,18 @@ export function Chat(props) {
           </div>
         </div>
       </div>
-      <div className={`chat-section ${!props.username && "blocked"}`}>
+      <div
+        className={
+          `chat-section ${(!props.username || !props.connectedUsersNumber) && "blocked"}`
+        }
+      >
         <div className="chat-bubble">
           <div className="bubbles-bg">
             <img
               src={sendBtn}
-              className="send-btn cursor-pointer"
+              className={
+                `send-btn ${props.username && props.connectedUsersNumber && "cursor-pointer"}
+              `}
               alt="send-btn.png"
               onClick={sendButton}
             />
