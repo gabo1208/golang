@@ -65,7 +65,7 @@ export function Chat(props) {
         }
       >
         <div className="chat-bubble">
-          <div className="bubbles-bg">
+          <div className="bubbles-bg no-overflow">
             <img
               src={sendBtn}
               className={

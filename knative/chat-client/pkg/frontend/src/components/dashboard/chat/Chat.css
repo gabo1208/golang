@@ -31,6 +31,10 @@
   overflow-y: auto;
 }
 
+.bubbles-bg.no-overflow {
+  overflow: hidden;
+}
+
 .contact-message, .user-message {
   height: fit-content;
   width: fit-content;

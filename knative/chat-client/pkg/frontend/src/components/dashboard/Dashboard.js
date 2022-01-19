@@ -3,7 +3,7 @@ import './Dashboard.css'
 import { Contacts } from './contacts/Contacts'
 import { Chat } from './chat/Chat'
 import { Menu } from './menu/Menu'
-import { detectSmallScreen } from '../utils/Helper'
+import { detectSmallScreen } from '../../utils/Helper'
 
 export function Dashboard(props) {
   const [chatState, setChatState] = useState({
