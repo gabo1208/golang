@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import './Contacts.css'
 import userImg from '../../../static/img/user.png'
 
@@ -54,5 +54,5 @@ export function Contacts(props) {
       </div>
       {renderContacts(props.connectedUsers)}
     </div>
-  );
+  )
 }

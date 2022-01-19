@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import sendBtn from '../../../static/img/send-btn.png'
 import './Chat.css'
 
@@ -87,5 +87,5 @@ export function Chat(props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

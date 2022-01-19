@@ -11,6 +11,7 @@
 
 .side-bar {
   flex: 1;
+  min-width: 290px;
 }
 
 .app-container.bg {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import usernameIcon from '../../../static/img/username-icon.png'
 import logoutIcon from '../../../static/img/logout-icon.png'
 import './Menu.css'
@@ -52,5 +52,5 @@ export function Menu(props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

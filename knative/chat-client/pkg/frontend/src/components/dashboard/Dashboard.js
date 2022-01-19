@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react'
 import './Dashboard.css'
 import { Contacts } from './contacts/Contacts'
 import { Chat } from './chat/Chat'
 import { Menu } from './menu/Menu'
+import { detectSmallScreen } from '../utils/Helper'
 
 export function Dashboard(props) {
   const [chatState, setChatState] = useState({
@@ -25,32 +26,44 @@ export function Dashboard(props) {
     setChatState({ ...chatState, selectedChatIndex })
   }, [setChatState, chatState])
 
+  const renderDesktopDashboard = () => (
+    <>
+      <div className="side-bar">
+        {props.menuBarStatus
+          ? <Menu
+            usernameSetter={props.usernameCallback}
+            username={props.username}
+          />
+          : <Contacts
+            username={props.username}
+            connectedUsers={chatState.connectedUsers}
+            selectedChatIndex={chatState.selectedChatIndex}
+            selectedChat={chatState.connectedUsers[chatState.selectedChatIndex]}
+            updateSelectedChatIndexCallback={updateSelectedChatIndexCallback}
+          />}
+      </div>
+      <div className="chat">
+        <Chat
+          username={props.username}
+          selectedChat={chatState.connectedUsers[chatState.selectedChat]}
+          connectedUsersNumber={chatState.connectedUsers.length}
+          updateChatMessagesCallback={updateChatMessagesCallback}
+        />
+      </div>
+    </>
+  )
+
+  const renderMobileDashboard = () => (
+    <div className="mobile-dashboard"></div>
+  )
+
   return (
     <div className="dashboard">
       <div className="app-container bg">
-        <div className="side-bar">
-          {props.menuBarStatus
-            ? <Menu
-              usernameSetter={props.usernameCallback}
-              username={props.username}
-            />
-            : <Contacts
-              username={props.username}
-              connectedUsers={chatState.connectedUsers}
-              selectedChatIndex={chatState.selectedChatIndex}
-              selectedChat={chatState.connectedUsers[chatState.selectedChatIndex]}
-              updateSelectedChatIndexCallback={updateSelectedChatIndexCallback}
-            />}
-        </div>
-        <div className="chat">
-          <Chat
-            username={props.username}
-            selectedChat={chatState.connectedUsers[chatState.selectedChat]}
-            connectedUsersNumber={chatState.connectedUsers.length}
-            updateChatMessagesCallback={updateChatMessagesCallback}
-          />
-        </div>
+        {detectSmallScreen()
+          ? renderMobileDashboard()
+          : renderDesktopDashboard()}
       </div>
     </div>
-  );
+  )
 }
