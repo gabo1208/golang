@@ -1,0 +1,3 @@
+[submodule "knative/knative-go-chat-app"]
+	path = knative/knative-go-chat-app
+	url = git@github.com:gabo1208/knative-go-chat-app
