@@ -18,7 +18,7 @@ var (
 )
 
 func main() {
-	/*event := cloudevents.NewEvent()
+	event := cloudevents.NewEvent()
 	//event2 := cloudevents.NewEvent()
 	event.SetID("example-uuid-32943bac6fea")
 	event.SetSource("example/uri")
@@ -29,11 +29,15 @@ func main() {
 	event.SetDataContentType("testdatacontt")
 	event.SetDataSchema("testdatasch")
 	event.SetSpecVersion("0.3")
-	fmt.Println(event.SpecVersion())
+	for _, attr := range spec.V1.Attributes() {
+		fmt.Println(attr.PrefixedName())
+	}
+	fmt.Println(spec.V1.Attribute("ce-id").Name())
+	fmt.Println(event)
 	fmt.Println("---------------------------------")
 	fmt.Println()
 
-	data := `{
+	/*data := `{
 		"specversion": "1.0",
 		"type": "example.type",
 		"source": "example/uri",
