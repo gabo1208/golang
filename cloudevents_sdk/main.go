@@ -80,6 +80,8 @@ func main() {
 	event.SetDataContentType("test")
 	fmt.Println(event)
 
+	bytes = []byte(`{"id":"example-uuid-123123123","specversion":"1.0"}`)
+
 	event = cloudevents.NewEvent()
 	err = setEventAttributes(&event, "datacontenttype", "ce-datacontenttype", body)
 	if err != nil {
